@@ -1,2 +1,2 @@
 # serverless-ee
-Productive fnproject.io functions
+Productive fnproject.io (Fat) functions
