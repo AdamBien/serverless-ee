@@ -16,13 +16,10 @@ import sl.ee.Boundary;
 
 public class EndpointFunction {
 
-    private final SeContainer cdiRuntime;
-
     public EndpointFunction() {
-        SeContainerInitializer initializer = SeContainerInitializer.newInstance();
-        this.cdiRuntime = initializer.initialize();
-
+        log(this, "instantiated");
     }
+
 
     public OutputEvent handleRequest(InputEvent input) {
         log(this, "receiving input: " + input);
@@ -34,12 +31,22 @@ public class EndpointFunction {
         StringWriter writer = new StringWriter();
         JsonWriter jsonWriter = Json.createWriter(writer);
         jsonWriter.writeObject(output);
+        byte[] outputAsBytes = writer.getBuffer().toString().getBytes();
+        return OutputEvent.fromBytes(outputAsBytes, OutputEvent.Status.Success, "application/json");
+    }
 
-        return OutputEvent.fromBytes(writer.getBuffer().toString().getBytes(), 200, "application/json");
+    SeContainer initCDI() {
+        log(this, "initializing CDI runtime");
+        SeContainerInitializer initializer = SeContainerInitializer.newInstance();
+        SeContainer cdiRuntime = initializer.initialize();
+        log(this, "CDI runtime initialized");
+        return cdiRuntime;
+
     }
 
     public JsonObject handleConvertedRequest(JsonObject input) {
-        Instance<Boundary> boundaryInstance = this.cdiRuntime.select(Boundary.class);
+        SeContainer seContainer = this.initCDI();
+        Instance<Boundary> boundaryInstance = seContainer.select(Boundary.class);
         Boundary boundary = boundaryInstance.get();
         log(this, "boundary implementation found: " + boundary.getClass().getName());
         return boundary.handleRequest(input);
