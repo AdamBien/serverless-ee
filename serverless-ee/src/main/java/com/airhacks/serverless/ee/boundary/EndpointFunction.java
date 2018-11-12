@@ -28,7 +28,7 @@ public class EndpointFunction {
         log(this, "receiving input: " + input);
         JsonObject inputAsJson = input.consumeBody(this::convert);
         log(this, "input converted: " + inputAsJson);
-        JsonObject output = this.handleRequest(inputAsJson);
+        JsonObject output = this.handleConvertedRequest(inputAsJson);
         log(this, "sending back output: " + output);
 
         StringWriter writer = new StringWriter();
@@ -38,7 +38,7 @@ public class EndpointFunction {
         return OutputEvent.fromBytes(writer.getBuffer().toString().getBytes(), 200, "application/json");
     }
 
-    public JsonObject handleRequest(JsonObject input) {
+    public JsonObject handleConvertedRequest(JsonObject input) {
         Instance<Boundary> boundaryInstance = this.cdiRuntime.select(Boundary.class);
         Boundary boundary = boundaryInstance.get();
         log(this, "boundary implementation found: " + boundary.getClass().getName());
