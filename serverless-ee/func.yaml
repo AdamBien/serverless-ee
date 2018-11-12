@@ -1,0 +1,12 @@
+schema_version: 20180708
+name: slee
+version: 0.0.1
+runtime: java
+build_image: fnproject/fn-java-fdk-build:jdk9-1.0.75
+run_image: fnproject/fn-java-fdk:jdk9-1.0.75
+cmd: sl.ee.EndpointFunction::handleRequest
+format: http-stream
+triggers:
+- name: slee-trigger
+  type: http
+  source: /slee-trigger
