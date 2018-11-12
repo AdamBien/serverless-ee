@@ -1,10 +1,10 @@
 schema_version: 20180708
 name: slee
-version: 0.0.1
-runtime: java
-build_image: fnproject/fn-java-fdk-build:jdk9-1.0.75
-run_image: fnproject/fn-java-fdk:jdk9-1.0.75
-cmd: sl.ee.EndpointFunction::handleRequest
+version: 0.0.14
+runtime: java8
+build_image: fnproject/fn-java-fdk-build:1.0.75
+run_image: fnproject/fn-java-fdk:1.0.75
+cmd: com.airhacks.serverless.ee.boundary.EndpointFunction::handleRequest
 format: http-stream
 triggers:
 - name: slee-trigger
