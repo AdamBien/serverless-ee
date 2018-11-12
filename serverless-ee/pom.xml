@@ -28,7 +28,7 @@
         <dependency>
             <groupId>com.fnproject.fn</groupId>
             <artifactId>api</artifactId>
-            <version>1.0.62</version>
+            <version>1.0.75</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.weld.se</groupId>
